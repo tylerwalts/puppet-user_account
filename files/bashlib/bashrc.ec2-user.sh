@@ -1,0 +1,4 @@
+
+# Amazon bashrc"
+
+
