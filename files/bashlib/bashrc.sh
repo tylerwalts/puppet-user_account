@@ -20,6 +20,7 @@ PATH=$PATH:$GROOVY_HOME/bin
 PATH=$PATH:/opt/puppet/bin
 PATH=$PATH:/sbin
 PATH=$PATH:/usr/sbin
+PATH=$PATH:/etc/alternatives
 export PATH=$PATH
 
 
