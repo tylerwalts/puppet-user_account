@@ -2,8 +2,15 @@
 class user_account::bashlib ( $users ) {
 
     define user_bashlib ($user = $title) {
+
+        if ( "$user" == "root"){
+            $user_home="/root"
+        }else{
+            $user_home="/home/$user"
+        }
+
         # For managing bash library
-        file { "/home/$user/.bashlib":
+        file { "$user_home/.bashlib":
             ensure => directory,
             recurse => true,
             owner   => $user,

@@ -1,8 +1,14 @@
 class user_account::screenrc ( $users ) {
 
     define user_screenrc ($user = $title) {
+        if ( "$user" == "root"){
+            $user_home="/root"
+        }else{
+            $user_home="/home/$user"
+        }
+
         # For managing Screen preferences
-        file { "/home/$user/.screenrc":
+        file { "$user_home/.screenrc":
             owner   => $user,
             group   => $user,
             source  => "puppet:///modules/user_account/screenrc",
