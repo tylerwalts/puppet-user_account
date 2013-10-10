@@ -11,7 +11,7 @@ alias gb='git branch'
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 
 ### Env Vars
-export JAVA_HOME=/usr/java/jdk
+export JAVA_HOME=/opt/java_home
 export GROOVY_HOME=/opt/groovy
 
 ### Paths
