@@ -14,16 +14,12 @@
 #
 class user_account ($users = undef){
     # Default resources managed for users
-    $user_classes = [
-        'user_account::exist',
-        'user_account::screenrc',
-        'user_account::bashlib',
-        'user_account::bashrc',
-        'user_account::sudoers',
-        'user_account::ssh_key',
-    ]
+    $all_users = hiera_hash('user_account::users',$users)
 
-    class { $user_classes:
-        users => hiera_array('user_account::users',$users)
-    }
+    create_resources('user_account::exist', $all_users)
+    create_resources('user_account::screenrc', $all_users)
+    create_resources('user_account::bashlib', $all_users)
+    create_resources('user_account::bashrc', $all_users)
+    create_resources('user_account::sudoers', $all_users)
+    create_resources('user_account::ssh_key', $all_users)
 }

@@ -1,14 +1,18 @@
 # Class: user_account::exist
 # Some doc
-class user_account::exist ( $users ) {
-  define exist {
-      user { "${name['user']}":
-          ensure      => 'present',
-          name        => $name['user'],
-          shell       => '/bin/bash',
-          managehome  => true,
-          groups      => ['users'],
-      }
-  }
-  exist { $users: }
+
+define user_account::exist (
+    $user = $title,
+    $ssh_key_content = undef,
+    $ssh_key_type = 'rsa',
+    $nopass = undef,
+    $allow_non_tty = undef,
+  ){
+    user { $title:
+      ensure      => 'present',
+      name        => $title,
+      shell       => '/bin/bash',
+      managehome  => true,
+      groups      => ['users'],
+    }
 }
