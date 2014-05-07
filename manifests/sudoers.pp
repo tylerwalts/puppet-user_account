@@ -1,22 +1,20 @@
 class user_account::sudoers ( $users ){
 
     # Define for adding users
-    define add_to_sudoers (
-        $noPass     = "true",
-        $disabletty = "true",
-    ) {
-        if ( "$noPass" == "true" ) {
-            exec { "sudoNoPass-$name":
+    define add_to_sudoers {
+        $user=$name['user']
+        if ( $name['nopass'] == true ) {
+            exec { "sudoNoPass-${user}":
                 path    => ['/bin','/usr/bin'],
-                command => "echo \"$name ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers.d/$name",
-                unless  => "grep NOPASSWD /etc/sudoers.d/$name"
+                command => "echo \"${user} ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers.d/${user}",
+                unless  => "grep NOPASSWD /etc/sudoers.d/${user}"
             }
         }
-        if ( "$disabletty" == "true" ) {
-            exec { "sudoNoTty-$name":
+        if ( $name['allow_non_tty'] == true ) {
+            exec { "sudoNoTty-${user}":
                 path    => ['/bin','/usr/bin'],
-                command => "echo \"Defaults:$name !requiretty\" >> /etc/sudoers.d/$name",
-                unless  => "grep requiretty /etc/sudoers.d/$name"
+                command => "echo \"Defaults:${user} !requiretty\" >> /etc/sudoers.d/${user}",
+                unless  => "grep requiretty /etc/sudoers.d/${user}"
             }
         }
     }
