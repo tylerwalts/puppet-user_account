@@ -8,6 +8,7 @@ Example:
 > Please note the use of the empty hash `{}` for the nosettings user.
 > You **must** provide a value for every user, even if they will be
 > defaulting all the values
+
 ```
 ---
 user_account::users:
