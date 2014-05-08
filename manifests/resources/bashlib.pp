@@ -1,10 +1,4 @@
-define user_account::bashlib (
-    $user = $title,
-    $ssh_key_content = undef,
-    $ssh_key_type = 'rsa',
-    $nopass = undef,
-    $allow_non_tty = undef,
-  ){
+define user_account::resources::bashlib ( $user = $title ){
     if ( $user == 'root'){
         $user_home='/root'
     }else{

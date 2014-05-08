@@ -1,11 +1,4 @@
-define user_account::gradle (
-    $user = $title,
-    $ssh_key_content = undef,
-    $ssh_key_type = 'rsa',
-    $nopass = undef,
-    $allow_non_tty = undef,
-  ){
-    $user=$title
+define user_account::resources::gradle ( $user = $title ){
     if ( $user == 'root'){
         $user_home='/root'
     }else{
@@ -17,8 +10,9 @@ define user_account::gradle (
     $gradle_settings_file = "${user_home}/.gradle/gradle.properties"
     file { "${user_home}/.gradle":
         ensure  => directory,
+        require  => User[$user],
     }
-    exec { 'gradle_daemon_setting':
+    exec { "gradle daemon setting for $user":
         path    => ['/bin'],
         command => "echo \"\n${gradle_daemon_setting}\" >> ${gradle_settings_file}",
         require => File["${user_home}/.gradle"],

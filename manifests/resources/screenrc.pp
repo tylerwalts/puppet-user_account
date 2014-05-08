@@ -1,10 +1,4 @@
-define user_account::screenrc (
-    $user = $title,
-    $ssh_key_content = undef,
-    $ssh_key_type = 'rsa',
-    $nopass = undef,
-    $allow_non_tty = undef,
-  ){
+define user_account::resources::screenrc ( $user = $title ){
     if ( $user == 'root'){
         $user_home='/root'
     }else{

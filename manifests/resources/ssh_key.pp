@@ -1,11 +1,9 @@
 # Class: user_account
 # manages the SSH key if defined in the user hash
-define user_account::ssh_key (
+define user_account::resources::ssh_key (
     $user = $title,
     $ssh_key_content = undef,
-    $ssh_key_type = 'rsa',
-    $nopass = undef,
-    $allow_non_tty = undef,
+    $ssh_key_type = 'rsa'
   ){
     if ($ssh_key_content != undef ) {
         if ( $user == 'root'){

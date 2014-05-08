@@ -9,17 +9,15 @@
 #   Hash of users to be created for the system
 #
 #   NOTE: This value WILL be overridden with a fully
-#   merged version if there is a 'useraccount_users'
+#   merged version if there is a 'user_account::users'
 #   key found in the Hiera hierarchy
 #
 class user_account ($users = undef){
-    # Default resources managed for users
+
+    # Get a hash of users to manage
     $all_users = hiera_hash('user_account::users',$users)
 
-    create_resources('user_account::exist', $all_users)
-    create_resources('user_account::screenrc', $all_users)
-    create_resources('user_account::bashlib', $all_users)
-    create_resources('user_account::bashrc', $all_users)
-    create_resources('user_account::sudoers', $all_users)
-    create_resources('user_account::ssh_key', $all_users)
+    # Call a define with the superset of all user account parameters
+    create_resources('user_account::manage', $all_users)
+
 }
