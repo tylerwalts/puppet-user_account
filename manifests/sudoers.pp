@@ -1,25 +1,22 @@
-class user_account::sudoers ( $users ){
-
-    # Define for adding users
-    define add_to_sudoers (
-        $noPass     = "true",
-        $disabletty = "true",
-    ) {
-        if ( "$noPass" == "true" ) {
-            exec { "sudoNoPass-$name":
-                path    => ['/bin','/usr/bin'],
-                command => "echo \"$name ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers.d/$name",
-                unless  => "grep NOPASSWD /etc/sudoers.d/$name"
-            }
-        }
-        if ( "$disabletty" == "true" ) {
-            exec { "sudoNoTty-$name":
-                path    => ['/bin','/usr/bin'],
-                command => "echo \"Defaults:$name !requiretty\" >> /etc/sudoers.d/$name",
-                unless  => "grep requiretty /etc/sudoers.d/$name"
-            }
+define user_account::sudoers (
+    $user = $title,
+    $ssh_key_content = undef,
+    $ssh_key_type = 'rsa',
+    $nopass = undef,
+    $allow_non_tty = undef,
+  ){
+    if ( $nopass == true ) {
+        exec { "sudoNoPass-${user}":
+            path    => ['/bin','/usr/bin'],
+            command => "echo \"${user} ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers.d/${user}",
+            unless  => "grep NOPASSWD /etc/sudoers.d/${user}"
         }
     }
-
-    add_to_sudoers { $users: }
+    if ( $allow_non_tty == true ) {
+        exec { "sudoNoTty-${user}":
+            path    => ['/bin','/usr/bin'],
+            command => "echo \"Defaults:${user} !requiretty\" >> /etc/sudoers.d/${user}",
+            unless  => "grep requiretty /etc/sudoers.d/${user}"
+        }
+    }
 }

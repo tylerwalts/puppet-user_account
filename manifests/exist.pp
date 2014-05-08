@@ -1,14 +1,18 @@
-class user_account::exist ( $users ) {
+# Class: user_account::exist
+# Some doc
 
-    define user_exists ($user = $title) {
-        user { $user:
-            shell       => "/bin/bash",
-            managehome  => true,
-            groups      => ['users'],
-        }
+define user_account::exist (
+    $user = $title,
+    $ssh_key_content = undef,
+    $ssh_key_type = 'rsa',
+    $nopass = undef,
+    $allow_non_tty = undef,
+  ){
+    user { $title:
+      ensure      => 'present',
+      name        => $title,
+      shell       => '/bin/bash',
+      managehome  => true,
+      groups      => ['users'],
     }
-
-    # Call the define for every member of the users array passed in
-    user_exists { $users: }
-
 }
