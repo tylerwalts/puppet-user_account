@@ -6,13 +6,15 @@ define user_account::resources::inputrc ( $user = $title ){
         $user_home="/home/${user}"
     }
 
-    # For managing bash library
-    file_line { "${user_home}/.inputrc":
+    file {"${user_home}/.inputrc":
         ensure  => 'present',
         path    => "${user_home}/.inputrc",
         owner   => $user,
-        group   => $user,
         mode    => '0644',
+    } ->
+    file_line { "${user_home}/.inputrc":
+        ensure  => 'present',
+        path    => "${user_home}/.inputrc",
         line    => 'set bell-style none'
     }
 }
